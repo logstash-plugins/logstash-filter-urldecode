@@ -6,7 +6,6 @@ require "uri"
 # The urldecode filter is for decoding fields that are urlencoded.
 class LogStash::Filters::Urldecode < LogStash::Filters::Base
   config_name "urldecode"
-  milestone 2
 
   # The field which value is urldecoded
   config :field, :validate => :string, :default => "message"
