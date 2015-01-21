@@ -4,8 +4,6 @@ require "logstash/devutils/rspec/spec_helper"
 require "logstash/filters/urldecode"
 
 describe LogStash::Filters::Urldecode do
-  let(:logger) { double(:logger) }
-
   describe "urldecode of correct urlencoded data" do
     # The logstash config goes here.
     # At this time, only filters are supported.
