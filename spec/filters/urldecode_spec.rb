@@ -4,6 +4,7 @@ require "logstash/devutils/rspec/spec_helper"
 require "logstash/filters/urldecode"
 
 describe LogStash::Filters::Urldecode do
+  let(:logger) { double(:logger) }
 
   describe "urldecode of correct urlencoded data" do
     # The logstash config goes here.
@@ -48,7 +49,16 @@ describe LogStash::Filters::Urldecode do
       insist { subject["message"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
       insist { subject["nonencoded"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
     end
-
   end
 
+   describe "urldecode should replace invalid UTF-8" do
+     config <<-CONFIG
+      filter {
+        urldecode {}
+      }
+     CONFIG
+     sample("message" => "/a/sa/search?rgu=0;+%C3%BB%D3%D0%D5%D2%B5%BD=;+%B7%A2%CB%CD=") do
+      insist { subject["message"] } == "/a/sa/search?rgu=0;+û\\xD3\\xD0\\xD5ҵ\\xBD=;+\\xB7\\xA2\\xCB\\xCD="
+     end
+   end
 end
