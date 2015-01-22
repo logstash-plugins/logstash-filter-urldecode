@@ -23,9 +23,8 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
 
   public
   def register
-    @converter = LogStash::Util::Charset.new(@charset).tap  do |charset|
-      charset.logger = logger
-    end
+    @converter = LogStash::Util::Charset.new(@charset)
+    @converter.logger = logger
   end #def register
 
   public
