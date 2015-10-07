@@ -29,7 +29,7 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
 
   public
   def filter(event)
-    return unless filter?(event)
+    
 
     # If all_fields is true then try to decode them all
     if @all_fields
