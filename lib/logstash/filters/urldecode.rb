@@ -14,6 +14,9 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
   # Urldecode all fields
   config :all_fields, :validate => :boolean, :default => false
 
+  # Urldecode all fields starting with prefix
+  config :prefix, :validate => :string
+
   # Thel character encoding used in this filter. Examples include `UTF-8`
   # and `cp1252`
   #
@@ -34,6 +37,13 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
     # If all_fields is true then try to decode them all
     if @all_fields
       event.to_hash.each { |name, value| event[name] = urldecode(value) }
+    # If a prefix is defined then try to decode all params starting with it
+    elsif !@prefix.nil?
+      event.to_hash.each do |name, value|
+        if name.start_with?(@prefix)
+          event[name] = urldecode(value)
+        end
+      end
     # Else decode the specified field
     else
       event[@field] = urldecode(event[@field])
