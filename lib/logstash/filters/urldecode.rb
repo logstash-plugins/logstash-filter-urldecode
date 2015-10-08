@@ -17,7 +17,7 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
   # Urldecode all fields starting with prefix
   config :prefix, :validate => :string
 
-  # Thel character encoding used in this filter. Examples include `UTF-8`
+  # The character encoding used in this filter. Examples include `UTF-8`
   # and `cp1252`
   #
   # This setting is useful if your url decoded string are in `Latin-1` (aka `cp1252`)
