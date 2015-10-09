@@ -59,4 +59,36 @@ describe LogStash::Filters::Urldecode do
       insist { subject["message"] } == "/a/sa/search?rgu=0;+û\\xD3\\xD0\\xD5ҵ\\xBD=;+\\xB7\\xA2\\xCB\\xCD="
      end
    end
+
+   describe "urldecode with a user defined field" do
+    config <<-CONFIG
+      filter {
+        urldecode {
+          field => "foo"
+        }
+      }
+    CONFIG
+
+    sample("message" => "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode", "foo" => "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode") do
+      insist { subject["message"] } == "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode"
+      insist { subject["foo"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
+    end
+  end
+
+   describe "urldecode with a prefix set to px_" do
+    config <<-CONFIG
+      filter {
+        urldecode {
+          prefix => "px_"
+        }
+      }
+    CONFIG
+
+    sample("message" => "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode", "px_foo" => "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode",
+        "px_bar" => "http%3A%2F%2Flogstash.net") do
+      insist { subject["message"] } == "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode"
+      insist { subject["px_foo"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
+      insist { subject["px_bar"]} == "http://logstash.net"
+    end
+  end
 end
