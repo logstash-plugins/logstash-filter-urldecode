@@ -15,7 +15,7 @@ describe LogStash::Filters::Urldecode do
     CONFIG
 
     sample("message" => "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode") do
-      insist { subject["message"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
+      insist { subject.get("message") } == "http://logstash.net/docs/1.3.2/filters/urldecode"
     end
   end
 
@@ -28,7 +28,7 @@ describe LogStash::Filters::Urldecode do
     CONFIG
 
     sample("message" => "http://logstash.net/docs/1.3.2/filters/urldecode") do
-      insist { subject["message"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
+      insist { subject.get("message") } == "http://logstash.net/docs/1.3.2/filters/urldecode"
     end
   end
 
@@ -44,8 +44,8 @@ describe LogStash::Filters::Urldecode do
     CONFIG
 
     sample("message" => "http%3A%2F%2Flogstash.net%2Fdocs%2F1.3.2%2Ffilters%2Furldecode", "nonencoded" => "http://logstash.net/docs/1.3.2/filters/urldecode") do
-      insist { subject["message"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
-      insist { subject["nonencoded"] } == "http://logstash.net/docs/1.3.2/filters/urldecode"
+      insist { subject.get("message") } == "http://logstash.net/docs/1.3.2/filters/urldecode"
+      insist { subject.get("nonencoded") } == "http://logstash.net/docs/1.3.2/filters/urldecode"
     end
   end
 
@@ -56,7 +56,7 @@ describe LogStash::Filters::Urldecode do
       }
      CONFIG
      sample("message" => "/a/sa/search?rgu=0;+%C3%BB%D3%D0%D5%D2%B5%BD=;+%B7%A2%CB%CD=") do
-      insist { subject["message"] } == "/a/sa/search?rgu=0;+û\\xD3\\xD0\\xD5ҵ\\xBD=;+\\xB7\\xA2\\xCB\\xCD="
+       insist { subject.get("message") } == "/a/sa/search?rgu=0;+û\\xD3\\xD0\\xD5ҵ\\xBD=;+\\xB7\\xA2\\xCB\\xCD="
      end
    end
 end

@@ -29,14 +29,12 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
 
   public
   def filter(event)
-    
-
     # If all_fields is true then try to decode them all
     if @all_fields
-      event.to_hash.each { |name, value| event[name] = urldecode(value) }
+      event.to_hash.each { |name, value| event.set(name, urldecode(value)) }
     # Else decode the specified field
     else
-      event[@field] = urldecode(event[@field])
+      event.set(@field, urldecode(event.get(@field)))
     end
     filter_matched(event)
   end # def filter
