@@ -64,7 +64,7 @@ describe LogStash::Filters::Urldecode do
      end
    end
 
-   describe "urldecode should not attempt to decode non RFC 3986 compliant strings" do
+   describe "urldecode should handle non RFC 3986 compliant strings with encoding in params portion" do
      config <<-CONFIG
       filter {
         urldecode {
@@ -78,12 +78,11 @@ describe LogStash::Filters::Urldecode do
      end
    end
 
-   describe "urldecode should not attempt to decode non RFC 3986 compliant strings and set custom tag" do
+   describe "urldecode should handle non RFC 3986 compliant strings with encoding in url portion" do
      config <<-CONFIG
       filter {
         urldecode {
           field => "url"
-          tag_on_failure => ["_decodefailed"]
         }
       }
      CONFIG

@@ -59,8 +59,9 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
     # There is a bug in the Ruby stdlib URI.unescape
     # this: URI.unescape("europ%C3%A9enneeuropéenne") throws the following error
     # Encoding::CompatibilityError: incompatible encodings: ASCII-8BIT and UTF-8
+    # because Array#pack returns ASCII-8BIT encoded strings
     # this a hybrid of URI.unescape and CGI.unescape
-    value.gsub(UnescapeRe){|s|[s.delete(UnescapePercent)].pack(UnescapePack).force_encoding(Encoding::UTF_8) }
+    value.gsub(UnescapeRe){|s|[s.delete(UnescapePercent)].pack(UnescapePack).force_encoding(value.encoding) }
   end
 
   # Attempt to handle string, array, and hash values for fields.
