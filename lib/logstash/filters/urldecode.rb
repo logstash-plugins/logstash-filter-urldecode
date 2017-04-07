@@ -27,7 +27,6 @@ class LogStash::Filters::Urldecode < LogStash::Filters::Base
   UnescapeRe = /((?:%[0-9a-fA-F]{2})+)/
   UnescapePercent = '%'.freeze
   UnescapePack = 'H*'.freeze
-  JavaUrlDecoder = java.net.URLDecoder
 
   public
   def register
