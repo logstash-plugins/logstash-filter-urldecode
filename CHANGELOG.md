@@ -1,3 +1,6 @@
+## 3.0.5
+  - Fix some documentation issues
+
 ## 3.0.3
   - Fix 6 "incompatible encodings: UTF-8 and ASCII-8BIT"
 
