@@ -1,6 +1,6 @@
 # Logstash Plugin
 
-[![Travis Build Status](https://travis-ci.org/logstash-plugins/logstash-filter-urldecode.svg)](https://travis-ci.org/logstash-plugins/logstash-filter-urldecode)
+[![Travis Build Status](https://travis-ci.com/logstash-plugins/logstash-filter-urldecode.svg)](https://travis-ci.com/logstash-plugins/logstash-filter-urldecode)
 
 This is a plugin for [Logstash](https://github.com/elastic/logstash).
 
